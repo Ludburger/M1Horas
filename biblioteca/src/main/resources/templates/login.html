@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container small">
+    <section class="auth-panel">
+        <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+                <h1>Biblioteca</h1>
+                <p>Gestão de livros, usuários, empréstimos e reservas.</p>
+            </div>
+        </div>
+
+        <div th:if="${param.error}" class="alert error">E-mail ou senha inválidos.</div>
+        <div th:if="${param.logout}" class="alert success">Logout realizado com sucesso.</div>
+
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+        <form th:action="@{/login}" method="post">
+            <label>
+                E-mail
+                <input type="email" name="username" value="admin@biblioteca.com" autocomplete="username" required>
+            </label>
+
+            <label>
+                Senha
+                <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p class="auth-link"><a th:href="@{/forgot-password}">Esqueci minha senha</a></p>
+    </section>
+</main>
+</body>
+</html>

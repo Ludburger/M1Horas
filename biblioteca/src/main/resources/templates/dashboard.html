@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+                <h1>Dashboard</h1>
+                <p>Usuário logado: <strong th:text="${username}"></strong></p>
+            </div>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="secondary" type="submit">Sair</button>
+        </form>
+    </header>
+
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a th:href="@{/users}">Usuários</a>
+        <a th:href="@{/books}">Livros</a>
+        <a th:href="@{/loans}">Empréstimos</a>
+        <a th:href="@{/reservations}">Reservas</a>
+    </nav>
+
+    <section class="panel">
+        <div class="panel-title">
+            <div>
+                <h1>Resumo da biblioteca</h1>
+                <p>Indicadores principais do acervo e da circulação.</p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <article class="stat accent">
+                <span>Livros cadastrados</span>
+                <strong th:text="${bookCount}">0</strong>
+            </article>
+            <article class="stat">
+                <span>Usuários</span>
+                <strong th:text="${userCount}">0</strong>
+            </article>
+            <article class="stat">
+                <span>Empréstimos abertos</span>
+                <strong th:text="${loanCount}">0</strong>
+            </article>
+            <article class="stat">
+                <span>Reservas</span>
+                <strong th:text="${reservationCount}">0</strong>
+            </article>
+        </div>
+    </section>
+</main>
+</body>
+</html>
