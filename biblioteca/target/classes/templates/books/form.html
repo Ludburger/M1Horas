@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livro - Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+                <h1 th:text="${book.id == null ? 'Novo livro' : 'Editar livro'}"></h1>
+                <p>Complete os dados do acervo e a quantidade total de exemplares.</p>
+            </div>
+        </div>
+        <a class="button-link secondary" th:href="@{/books}">&larr; Livros</a>
+    </header>
+
+    <section class="panel">
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+        <form th:action="@{/books}" th:object="${book}" method="post" class="form-grid">
+            <input type="hidden" th:field="*{id}">
+            <label>
+                Título
+                <input type="text" th:field="*{title}" required>
+            </label>
+            <label>
+                Autor
+                <input type="text" th:field="*{author}" required>
+            </label>
+            <label>
+                Editora
+                <input type="text" th:field="*{publisher}" required>
+            </label>
+            <label>
+                ISBN
+                <input type="text" th:field="*{isbn}" required>
+            </label>
+            <label class="full">
+                Resumo
+                <textarea th:field="*{summary}"></textarea>
+            </label>
+            <label>
+                Quantidade total
+                <input type="number" min="1" th:field="*{totalQuantity}" required>
+            </label>
+            <input type="hidden" th:field="*{availableQuantity}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div class="form-actions full">
+                <button type="submit">Salvar livro</button>
+                <a class="button-link secondary" th:href="@{/books}">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros - Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+                <h1>Livros</h1>
+                <p>Acervo, quantidades e dados editoriais.</p>
+            </div>
+        </div>
+        <div class="top-actions">
+            <a class="button-link secondary" th:href="@{/dashboard}">&larr; Dashboard</a>
+            <a class="button-link" th:href="@{/books/new}">Novo livro</a>
+        </div>
+    </header>
+
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a class="secondary" th:href="@{/users}">Usuários</a>
+        <a class="secondary" th:href="@{/loans}">Empréstimos</a>
+        <a class="secondary" th:href="@{/reservations}">Reservas</a>
+    </nav>
+
+    <section class="panel">
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+        <div class="table-wrap" th:if="${!#lists.isEmpty(books)}">
+            <table>
+                <thead>
+                <tr><th>Título</th><th>Autor</th><th>ISBN</th><th>Total</th><th>Disponíveis</th><th>Ações</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.isbn}"></td>
+                    <td th:text="${book.totalQuantity}"></td>
+                    <td><span class="badge" th:text="${book.availableQuantity}"></span></td>
+                    <td>
+                        <div class="row-actions">
+                            <a th:href="@{'/books/edit/' + ${book.id}}">Editar</a>
+                            <form th:action="@{'/books/delete/' + ${book.id}}" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <button class="button-danger" type="submit">Excluir</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(books)}">Nenhum livro cadastrado ainda.</p>
+    </section>
+</main>
+</body>
+</html>

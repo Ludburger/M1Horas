@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="container">
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-mark">B</div>
+            <div>
+                <h1>Reservas</h1>
+                <p>Fila de interesse para livros sem disponibilidade imediata.</p>
+            </div>
+        </div>
+        <div class="top-actions">
+            <a class="button-link secondary" th:href="@{/dashboard}">&larr; Dashboard</a>
+            <a class="button-link" th:href="@{/reservations/new}">Nova reserva</a>
+        </div>
+    </header>
+
+    <nav class="nav-links" aria-label="Navegação principal">
+        <a class="secondary" th:href="@{/users}">Usuários</a>
+        <a class="secondary" th:href="@{/books}">Livros</a>
+        <a class="secondary" th:href="@{/loans}">Empréstimos</a>
+    </nav>
+
+    <section class="panel">
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+        <div class="table-wrap" th:if="${!#lists.isEmpty(reservations)}">
+            <table>
+                <thead>
+                <tr><th>Livro</th><th>Usuário</th><th>Data</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="reservation : ${reservations}">
+                    <td th:text="${reservation.bookTitle}"></td>
+                    <td th:text="${reservation.userName}"></td>
+                    <td th:text="${reservation.reservationDate}"></td>
+                    <td><span class="badge warning" th:text="${reservation.status}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(reservations)}">Nenhuma reserva registrada ainda.</p>
+    </section>
+</main>
+</body>
+</html>
